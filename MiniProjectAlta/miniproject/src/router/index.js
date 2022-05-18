@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Outdoor from '../views/Outdoor.vue'
+import OutdoorDetail from '../views/OutdoorDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/outdoor',
     name: 'Outdoor',
     component: Outdoor
+  },
+  {
+    path: '/outdoor/:id',
+    name: 'OutdoorDetail',
+    component: OutdoorDetail
   },
   {
     path: '/about',

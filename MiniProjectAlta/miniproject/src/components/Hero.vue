@@ -5,7 +5,9 @@
             <div class="justify-content-center align-self-center">
                 <h2><strong> Welcome Alterra Outdoor, </strong><br> Happy Rent</h2>
                 <p> Ayo Pilih Barang Barang yang anda butuhkan </p>
-                <button class="btn btn-lg btn-succes"><b-icon-arrow-right></b-icon-arrow-right>Cari</button>
+                <router-link class="btn btn-lg btn-succes" to="/outdoor">
+                    <b-icon-arrow-right></b-icon-arrow-right>Cari
+                </router-link>
             </div>
         </div>
         </div>
