@@ -13,3 +13,7 @@
 .badge-succes {
     background-color: limegreen;
 }
+
+.img-fluid {
+    border-radius: 15px;
+}

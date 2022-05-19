@@ -23,12 +23,29 @@
         </div>
       </div>
 
-<div class="row">
+<div class="row mt-4">
   <div class="col-md-6">
-   <!-- <img :src="'../assets/images" />-->
+   <img :src=" '../assets/images/' + product.gambar " class="img-fluid" />
   </div>
   <div class="col-md-6">
-    <h2><strong>{{product.nama}}</strong></h2>
+    <h2><strong>{{ product.nama }}</strong></h2>
+    <hr>
+    <h4>Harga : <strong>Rp. {{ product.harga }}</strong></h4>
+    <form v-on:submit.prevent>
+      <div class="form-group">
+        <label for="jumlah_barang">Jumlah Barang</label>
+        <input type="number" class="form-control" v-model="pesan.jumlah_pemesanan" />
+      </div>
+      <div class="form-group">
+        <label for="keterangan">Keterangan</label>
+        <textarea v-model="pesan.keterangan" 
+        class="form-control" placeholder="Misalnya 2 hari, 3 hari , 1 minggu .. "></textarea>
+      </div>
+      <hr>
+
+      <button type="submit" class="btn btn-success" @click="pemesanan">
+        <b-icon-cart></b-icon-cart>Sewa Sekarang</button>
+    </form>
   </div>
 </div>
 
@@ -47,20 +64,30 @@ export default {
   },
   data(){
     return{
-      product: {}
+      product:{},
+      pesan:{}
     }
   },
   methods: {
     setProduct(data){
     this.product = data
+    },
+    pemesanan(){
+      this.pesan.product = this.product;
+      axios
+      .post("http://localhost:3010/keranjangs", this.pesan)
+      .then(() =>{
+      console.log("Berhasil");
+      })
+      .catch((err) => console.log(err))
     }
   },
 
   mounted(){
     axios
-      .get("http://localhost:3008/products"+this.$route.params.id)
+      .get("http://localhost:3010/products/"+this.$route.params.id)
       .then((response) => this.setProduct(response.data))
-      .catch((error) => console.log("Gagal : ", error));
+      .catch((error) => console.log(error));
   }
 };
 </script>

@@ -65,14 +65,14 @@ export default {
     },
     searchOutdoor() {
         axios
-      .get("http://localhost:3008/products?q="+this.search)
+      .get("http://localhost:3010/products?q="+this.search)
       .then((response) => this.setProduct(response.data))
       .catch((error) => console.log("Gagal : ", error));
     }
   },
   mounted() {
     axios
-      .get("http://localhost:3008/products")
+      .get("http://localhost:3010/products")
       .then((response) => this.setProduct(response.data))
       .catch((error) => console.log("Gagal : ", error));
   },
