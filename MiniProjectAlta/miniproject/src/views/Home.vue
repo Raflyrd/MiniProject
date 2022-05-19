@@ -48,7 +48,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:3008/best-products")
+      .get("http://localhost:3010/best-products")
       .then((response) => this.setProduct(response.data))
       .catch((error) =>  console.log("Gagal : ", error))
   },
