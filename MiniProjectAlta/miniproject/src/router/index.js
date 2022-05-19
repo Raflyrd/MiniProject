@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Outdoor from '../views/Outdoor.vue'
 import OutdoorDetail from '../views/OutdoorDetail.vue'
+import Keranjang from '../views/Keranjang.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/outdoor/:id',
     name: 'OutdoorDetail',
     component: OutdoorDetail
+  },
+  {
+    path: '/keranjang',
+    name: 'Keranjang',
+    component: Keranjang
   },
   {
     path: '/about',
