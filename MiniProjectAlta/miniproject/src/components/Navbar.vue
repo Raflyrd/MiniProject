@@ -1,30 +1,23 @@
 <template>
-  <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Alterra</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
+  <div>
+    <b-navbar toggleable="lg" type="light" variant="info">
+      <div class="container">
+        <b-navbar-brand href="#">Alterra Outdoor</b-navbar-brand>
+
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav>
+           <li class="nav-item">
               <router-link class="nav-link" to="/">Home</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/Outdoor">outdoor</router-link>
             </li>
-          </ul>
+          </b-navbar-nav>
 
-          <ul class="navbar-nav ml-auto">
+          <!-- Right aligned nav items -->
+          <b-navbar-nav class="ml-auto">
             <li class="nav-item">
               <router-link class="nav-link" to="/keranjang">
               Keranjang
@@ -32,34 +25,34 @@
               <span class="badge badge-success ml-2">{{ jumlah_pesanans.length }}</span>
               </router-link>
             </li>
-          </ul>
-        </div>
+          </b-navbar-nav>
+        </b-collapse>
       </div>
-    </nav>
+    </b-navbar>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "Navbar",
-    data(){
-      return{
-        jumlah_pesanans:[]
-      }
+  data() {
+    return {
+      jumlah_pesanans: [],
+    };
+  },
+  methods: {
+    setJumlah(data) {
+      this.jumlah_pesanans = data;
     },
-    methods:{
-      setJumlah(data){
-        this.jumlah_pesanans = data
-      }
-    },
-    mounted(){
-      axios
+  },
+  mounted() {
+    axios
       .get("http://localhost:3010/keranjangs")
       .then((response) => this.setJumlah(response.data))
-      .catch((error) =>  console.log("Gagal : ", error))
-    }
+      .catch((error) => console.log("Gagal : ", error));
+  },
 };
 </script>
 

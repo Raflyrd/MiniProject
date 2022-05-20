@@ -11,7 +11,8 @@
               </li>
               <li class="breadcrumb-item">
                 <router-link to="/outdoor" class="text-dark"
-                  >Outdoor</router-link>
+                  >Outdoor</router-link
+                >
               </li>
               <li class="breadcrumb-item active" aria-current="page">
                 Keranjang
@@ -39,42 +40,81 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(keranjang, index) in keranjangs" :key="keranjang.id">
-                  <th>{{index+1}}</th>
-                  <td> 
-                      <img :src=" '../assets/images/' + keranjang.product.gambar " class="img-fluid shadow" width="250" />
-                      </td>
-                  <td><strong>{{ keranjang.product.nama }}</strong></td>
+                <tr
+                  v-for="(keranjang, index) in keranjangs"
+                  :key="keranjang.id"
+                >
+                  <th>{{ index + 1 }}</th>
                   <td>
-                      {{keranjang.keterangan ? keranjang.keterangan : "-"}}
+                    <img
+                      :src="'../assets/images/' + keranjang.product.gambar"
+                      class="img-fluid shadow"
+                      width="250"
+                    />
                   </td>
                   <td>
-                      {{keranjang.jumlah_pemesanan}}
+                    <strong>{{ keranjang.product.nama }}</strong>
                   </td>
-                  <td align="right">
-                      Rp. {{keranjang.product.harga}}
+                  <td>
+                    {{ keranjang.keterangan ? keranjang.keterangan : "-" }}
                   </td>
+                  <td>
+                    {{ keranjang.jumlah_pemesanan }}
+                  </td>
+                  <td align="right">Rp. {{ keranjang.product.harga }}</td>
                   <td align="right">
-                      <strong> Rp. {{keranjang.product.harga*keranjang.jumlah_pemesanan}}</strong>
+                    <strong>
+                      Rp.
+                      {{
+                        keranjang.product.harga * keranjang.jumlah_pemesanan
+                      }}</strong
+                    >
                   </td>
                   <td align="center" class="text-danger"></td>
                   <td>
-                      <b-icon-trash></b-icon-trash>
+                    <b-icon-trash></b-icon-trash>
                   </td>
                 </tr>
 
                 <tr>
-                    <td colspan="6" align ="right">
-                        <strong>Total Harga : </strong>
-                    </td>
-                    <td align="right">
-                        <strong>Rp. {{ totalHarga }}</strong>
-                    </td>
-                    <td></td>
+                  <td colspan="6" align="right">
+                    <strong>Total Harga : </strong>
+                  </td>
+                  <td align="right">
+                    <strong>Rp. {{ totalHarga }}</strong>
+                  </td>
+                  <td></td>
                 </tr>
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-end">
+        <div class="col-md-4">
+          <form v-on:submit.prevent>
+            <div class="form-group">
+              <label for="nama">Nama Penyewa : </label>
+              <input
+                type="text"
+                class="form-control"
+                v-model="pesan.nama"/>
+            </div>
+             <div class="form-group">
+              <label for="alamat">Alamat : </label>
+              <input
+                type="text"
+                class="form-control"
+                v-model="pesan.alamat"
+              />
+            </div>
+            <hr />
+
+            <button type="submit" class="btn btn-success" @click="checkout">
+              <b-icon-cart></b-icon-cart>Sewa Sekarang
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -83,7 +123,7 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "Keranjang",
@@ -91,28 +131,40 @@ export default {
     Navbar,
   },
   data() {
-      return {
-          keranjangs:[]
+    return {
+      keranjangs: [],
+      pesan:{
+
       }
+    };
   },
-  methods:{
-      setKeranjangs(data) {
-          this.keranjangs = data;
-      }
+  methods: {
+    setKeranjangs(data) {
+      this.keranjangs = data;
+    },
+    checkout(){
+        console.log("Pesan : ", this.pesan);
+        this.pesan.keranjangs = this.keranjangs;
+        axios
+      .post("http://localhost:3010/pesanans", this.pesan)
+      .then(() =>{
+        this.$router.push({path: "/pesanan-sukses"})
+      })
+    }
   },
   mounted() {
-      axios
+    axios
       .get("http://localhost:3010/keranjangs")
       .then((response) => this.setKeranjangs(response.data))
       .catch((error) => console.log(error));
   },
   computed: {
-      totalHarga(){
-          return this.keranjangs.reduce(function(items, data){
-              return (items+data.product.harga*data.jumlah_pemesanan)
-          },0)
-      }
-  }
+    totalHarga() {
+      return this.keranjangs.reduce(function (items, data) {
+        return items + data.product.harga * data.jumlah_pemesanan;
+      }, 0);
+    },
+  },
 };
 </script>
 
